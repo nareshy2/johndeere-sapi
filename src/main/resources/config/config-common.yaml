@@ -1,0 +1,10 @@
+# Common File to be use in All env
+application:
+  name: "johndeere-sapi"
+milestone:
+  category: "LOG"
+  
+logger: 
+  source: "orders-papi"
+  target: "Johndeere visibility shipment create"
+  businessProcessName: "VALOR VICTORIA"

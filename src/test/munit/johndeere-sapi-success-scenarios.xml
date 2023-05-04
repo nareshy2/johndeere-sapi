@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="johndeere-sapi-test-suite.xml" />
+	<munit:test name="johndeere-sapi-test-suite-post:johndeere-sapi-configTest" doc:id="6136c7a2-487e-4d8a-859a-5039aa8c9529" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Oauth Response" doc:id="25317d0e-ebb9-46f7-90aa-dac5fe1d31e2" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="084c4b28-8be1-4bd3-aec0-68338c1f88a9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://dwl-files/johndeere-oauth-response.dwl')]" mediaType="application/json" />
+					<munit-tools:variables >
+						<munit-tools:variable key="oauthRequestPayload" value='#[output application/json --- {"client_id":"eyJraWQiOiI1WmFLN2VDU053dEI0R0ZIdGxiV191MzVTNGxXeGt5eGxpQWtjS3hGYUlJIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULk8wS1lZQkpzaUdqVWpjakE5eEVxcnAtaUFPMGV4N0x5UVRDVmdBb25ycHciLCJpc3MiOiJodHRwczovL2Nocm9iaW5zb24ub2t0YS5jb20vb2F1dGgyL2F1c3VxaHlmMUhqTGFhT3d6MzU2IiwiYXVkIjoiaHR0cHM6Ly9pbmF2aXNwaGVyZS5jaHJvYmluc29uLmNvbSIsImlhdCI6MTY4MjM1ODA0OSwiZXhwIjoxNjgyNDQ0NDQ5LCJjaWQiOiIwb2FxbnpldHJic0xvaUppRjM1NyIsInNjcCI6WyJyZWFkOnN0YXR1cyJdLCJzdWIiOiIwb2FxbnpldHJic0xvaUppRjM1NyJ9.LIZQU_LsA_PUNcs0M9i5AgQerQOfrCO2K3gRnF8pcyI1pOWOvBIbVtNZhKRCr_0GLaTJdEJiPYeBgLHbGISvXf77_TfwgJm5U5zjqzE49xxN64MWCkRmO5TMNQrXskY7KV1G0Kx-YV5DIjDVlfEiXJO1ClhHSxyeS25Q5ebeSSE6cVR7nTuiLWhNMcffuVhNBNeiqpkuspmh4hMdgTV1HXZmaAMTd71IVenAqJOWfIJdPuJn0VSBkxVl0m9voM1KfMUr3JsxO6lKnslcbo5E_YjMNRTIMRiRO0Z5z84KTS33tbkYsGVPxR8Xm7eTtXaiRldo_Zc0tOEm7ns-rR5m6Q"}]' mediaType="application/json" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Johndeere Response" doc:id="3be0d3e6-b1a0-451a-8c60-e8abbf9dc417" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="1d207196-14d1-4360-954f-f888d6d1df14" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[output application/json --- readUrl('classpath://dwl-files/output-attributes.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="75235a1a-a19c-403f-9a40-984f7d483d34" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://dwl-files/input-payload.dwl')]" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\order-updates:application\json:johndeere-sapi-config" doc:id="61f090f2-720a-46e9-a84f-1a97ba789fb2" name="post:\order-updates:application\json:johndeere-sapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="10c2d770-7730-46b0-b020-fc555a848a5d" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="johndeere-sapi-test-suite-post:johndeere-success-using-objectstore" doc:id="ca85495c-1500-423d-9fed-205574a17e10" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Object Retrieve" doc:id="3f51fb22-7ed9-4857-a16a-4401204fcd3b" processor="os:retrieve" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="919101a3-4ac9-4c7e-b303-ca012b034fad" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://dwl-files/retrieve-oauth-access-token.dwl')]" mediaType="application/json" />
+					<munit-tools:variables >
+						<munit-tools:variable key="oauthRequestPayload" value='#[output application/json --- {	"client_id": "eyJraWQiOiI1WmFLN2VDU053dEI0R0ZIdGxiV191MzVTNGxXeGt5eGxpQWtjS3hGYUlJIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULk8wS1lZQkpzaUdqVWpjakE5eEVxcnAtaUFPMGV4N0x5UVRDVmdBb25ycHciLCJpc3MiOiJodHRwczovL2Nocm9iaW5zb24ub2t0YS5jb20vb2F1dGgyL2F1c3VxaHlmMUhqTGFhT3d6MzU2IiwiYXVkIjoiaHR0cHM6Ly9pbmF2aXNwaGVyZS5jaHJvYmluc29uLmNvbSIsImlhdCI6MTY4MjM1ODA0OSwiZXhwIjoxNjgyNDQ0NDQ5LCJjaWQiOiIwb2FxbnpldHJic0xvaUppRjM1NyIsInNjcCI6WyJyZWFkOnN0YXR1cyJdLCJzdWIiOiIwb2FxbnpldHJic0xvaUppRjM1NyJ9.LIZQU_LsA_PUNcs0M9i5AgQerQOfrCO2K3gRnF8pcyI1pOWOvBIbVtNZhKRCr_0GLaTJdEJiPYeBgLHbGISvXf77_TfwgJm5U5zjqzE49xxN64MWCkRmO5TMNQrXskY7KV1G0Kx-YV5DIjDVlfEiXJO1ClhHSxyeS25Q5ebeSSE6cVR7nTuiLWhNMcffuVhNBNeiqpkuspmh4hMdgTV1HXZmaAMTd71IVenAqJOWfIJdPuJn0VSBkxVl0m9voM1KfMUr3JsxO6lKnslcbo5E_YjMNRTIMRiRO0Z5z84KTS33tbkYsGVPxR8Xm7eTtXaiRldo_Zc0tOEm7ns-rR5m6Q"}]' mediaType="application/json" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Johndeere Response" doc:id="5e1d9c0b-5747-4d80-816d-525a7c95803a" processor="http:request" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="1d207196-14d1-4360-954f-f888d6d1df14" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[output application/json --- readUrl('classpath://dwl-files/output-attributes.dwl')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="fcc4cbcb-1b4e-40f1-b368-75953e7ed0f2">
+				<munit:payload value="#[output application/json --- readUrl('classpath://dwl-files/input-payload.dwl')]" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="post:\order-updates:application\json:johndeere-sapi-config" doc:id="dd7ed449-3e00-42f7-a9c6-9d4a52fb339d" name="post:\order-updates:application\json:johndeere-sapi-config" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="fae0973a-d88d-4c62-8a09-948b1b7371f3" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="common-logging-test-suite" doc:id="22b9e324-f453-41f4-9b92-d714640c15c3" description="Test" >
+		<munit:execution >
+			<flow-ref doc:name="mile-log:data-enrinchment-failure" doc:id="d9a24573-b352-4068-82c5-e41f2aba0b5f" name="mile-log:data-enrinchment-failure" />
+			<flow-ref doc:name="Flow Reference" doc:id="294a4767-eb25-45e5-87cb-17b0ac93e2d5" name="mile-log:filter-criteria-failed"/>
+			<flow-ref doc:name="mile-log:failure-response-sent" doc:id="e3715f6c-24b4-4340-b193-170e173138c4" name="mile-log:failure-response-sent"/>
+			<flow-ref doc:name="mile-log:failure-response-received" doc:id="f8e0a3b1-a003-4a65-a6f3-990de2ac0522" name="mile-log:failure-response-received"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="dacb4452-e866-4069-b27d-9a94c0e1bdd2" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="johndeere-sapi-consoleTest" doc:id="5658a8f5-b2c2-4ea6-84fc-0ded99e182ee" description="Test" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e144d069-2316-4b02-80af-9a44eb8ac500" processor="apikit:console">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-console" doc:id="9a711b5b-f76e-497e-8bf6-b5c0ee1aef77" name="johndeere-sapi-console" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="317fb57a-ad17-4669-bec9-640b4bb534fa" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

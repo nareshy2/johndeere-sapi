@@ -1,0 +1,35 @@
+api:
+  id: "18611138"  
+
+http:
+  host: "0.0.0.0"
+  port: "8081"
+  
+https:
+  host: "0.0.0.0"
+  port: "8082"
+  
+tls:
+  type: "JKS"
+  path: "cert/vv-mule-cert-dev.jks"
+  alias: "vv-mule-cert"
+  
+httpRequest:
+  host: "sandbox-api.navisphere.com"
+  port: "443"
+  basePathMilestone: "/v1"
+  basePathVisibility: "/v2"
+  pathVisibility: "/visibility/shipments"
+  pathMilestones: "/shipments/milestones"
+  pathOauth: "/oauth/token"
+  method: "post"
+  responseTimeout: "30000"
+  frequency: "2000"
+  retryCount: "2"
+  
+backendBearerToken:
+  audience: "https://inavisphere.chrobinson.com"
+  grant_type: "client_credentials"
+  
+objStore:
+  ttl: "75000"

@@ -1,0 +1,51 @@
+#%RAML 1.0
+title: johndeere-sapi
+description: New JD Shipment Creation
+
+types: 
+  shipment-request: !include data-types/shipment-request.raml
+  shipment-response: !include data-types/shipment-response.raml
+  common-error-response: !include /exchange_modules/3d244ed7-6ddf-49a9-be6d-96e22048cbc0/vv-common-traits/1.0.2/types/error-response-type.raml
+
+traits:
+  correlation-id: !include /exchange_modules/3d244ed7-6ddf-49a9-be6d-96e22048cbc0/vv-common-traits/1.0.2/traits/transaction-id.raml
+
+/order-updates:
+  post:
+    description: Post a shipment create into Navisphere® Vision and/or Navisphere® Analytics.
+    is: [correlation-id]
+    body:
+      application/json:
+        type: shipment-request
+        example: !include examples/shipment-request.json
+    responses:
+      201:
+        body:
+          application/json:
+            type: shipment-response
+            example: !include examples/shipment-response.json
+      400:
+        body:
+          application/json:
+            type: common-error-response
+            example: !include examples/400-error.json
+      401:
+        body:
+          application/json:
+            type: common-error-response
+            example: !include examples/401-error.json
+      403:
+        body:
+          application/json:
+            type: common-error-response
+            example: !include examples/403-error.json
+      404:
+        body:
+          application/json:
+            type: common-error-response
+            example: !include examples/404-error.json
+      500:
+        body:
+          application/json:
+            type: common-error-response
+            example: !include examples/500-error.json

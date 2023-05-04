@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:oauth="http://www.mulesoft.org/schema/mule/oauth" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/oauth http://www.mulesoft.org/schema/mule/oauth/current/mule-oauth.xsd">
+	<sub-flow name="oauth-cache-flow" doc:id="d4edb651-907c-488c-92ab-f372372658d1" >
+		<os:retrieve doc:name="Retrieve Oauth Access Token" doc:id="919101a3-4ac9-4c7e-b303-ca012b034fad" objectStore="Object-store" key="#[vars.oauthRequestPayload.client_id]">
+			<os:default-value ><![CDATA[#[""]]]></os:default-value>
+		</os:retrieve>
+		<choice doc:name="Choice" doc:id="11acf8eb-bd75-4a93-ac39-f9c070e45621" >
+			<when expression="#[isEmpty(payload)]">
+				<http:request method="POST" doc:name="Create Token Request" doc:id="084c4b28-8be1-4bd3-aec0-68338c1f88a9" path="${httpRequest.pathOauth}" config-ref="johndeere-http-milestones-and-oauth" responseTimeout="${httpRequest.responseTimeout}">
+					<http:body ><![CDATA[#[vars.oauthRequestPayload]]]></http:body>
+				</http:request>
+				<os:store doc:name="Store Oauth Access Token" doc:id="bcad3b1a-3a27-443b-8027-7ec05617203d" objectStore="Object-store" key="#[vars.oauthRequestPayload.client_id]"/>
+				<set-variable value='#["Bearer " ++ payload.access_token as String]' doc:name="Set Bearer Access Token" doc:id="e642cb70-42e2-4839-8754-45beade6340e" variableName="bearerToken"/>
+			</when>
+			<otherwise >
+				<set-variable value='#["Bearer " ++ payload.access_token as String]' doc:name="Set Bearer Access Token" doc:id="38d9d26e-f272-4252-bf7c-98ae61760921" variableName="bearerToken" />
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>

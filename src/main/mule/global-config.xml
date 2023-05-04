@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:cofww-logger="http://www.mulesoft.org/schema/mule/cofww-logger"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/cofww-logger http://www.mulesoft.org/schema/mule/cofww-logger/current/mule-cofww-logger.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+<apikit:config name="johndeere-sapi-config" api="johndeere-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+ 
+
+	<!-- This configuration uses default algorithm (AES) and mode (CBC) -->
+	<secure-properties:config
+		name="Secure-Properties-Config"
+		doc:name="Environment-specific Secure Properties Config"
+		doc:id="b64daa35-1683-43f6-84c9-21776df3753a"
+		file="config/config-secured-dev.yaml"
+		key="12345678mulesoft" />
+
+	<configuration-properties
+		doc:name="Application Configuration properties"
+		doc:id="4e9071c0-5800-46f3-8031-b1ae639c2256"
+		file="config/config-${mule.env}.yaml" />
+
+	<configuration-properties
+		doc:name="Common Configuration properties"
+		doc:id="8f0a30ee-8023-4aa2-91a3-c8ab1f805c27"
+		file="config/config-common.yaml" />
+
+	<api-gateway:autodiscovery apiId="${api.id}"
+		doc:name="API Autodiscovery"
+		doc:id="99fac178-73f2-484b-8821-be13d2c2201a" flowRef="johndeere-sapi-main"
+		ignoreBasePath="true" />
+
+	<http:listener-config name="http-listener-config">
+        <http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS" tlsContext="tls-vv"/>
+    </http:listener-config>
+
+	<tls:context name="tls-vv" doc:name="TLS Context" doc:id="5dd20cd8-d02e-4879-af6b-5737ad42b3e6" >
+	
+	<tls:key-store type="jks" path="${tls.path}" alias="${tls.alias}" keyPassword="${secure::tls.keyPassword}" password="${secure::tls.password}" />
+	
+	</tls:context>
+	<http:request-config name="johndeere-http-milestones-and-oauth" doc:name="HTTP Request configuration" doc:id="1398904d-53e6-4564-8f91-9c0260038a3e" basePath="${httpRequest.basePathMilestone}">
+		<http:request-connection protocol="HTTPS" host="${httpRequest.host}" port="${httpRequest.port}"/>
+	</http:request-config>
+	<http:request-config name="johndeere-http-visibility-shipments" doc:name="HTTP Request configuration" doc:id="f48e19d2-e5eb-4bf9-8661-a9f4885a63b3" basePath="${httpRequest.basePathVisibility}" >
+		<http:request-connection protocol="HTTPS" host="${httpRequest.host}" port="${httpRequest.port}" />
+	</http:request-config>
+	<os:object-store name="Object-store" doc:name="Object store" doc:id="ff9e43c8-5532-4f35-aa8c-8f9d5415e0be" entryTtl="${objStore.ttl}" />
+	<import doc:name="Import" doc:id="e5fa175b-fc95-47db-8b4a-631a7ebd07bf" doc:description="error-handler" file="error-handler.xml" />
+	<import doc:name="Import" doc:id="c7b1c83b-0edc-4ff6-ac9e-3690460ac352" doc:description="common-global" file="common-global.xml" />
+	<import doc:name="Import" doc:id="59487e00-198c-46f6-aa7a-7310e3065ece" doc:description="mule-common-logging" file="mule-common-logging.xml" />
+	<configuration doc:name="Configuration" doc:id="a27df342-cd9a-4d09-ab3a-711d321573ba" defaultErrorHandler-ref="error-handler" />
+	<global-property doc:name="Global Property" doc:id="da1f1d8b-3db2-4cc0-a7d4-ddad53fe33e8" name="mule.env" value="dev" />
+	
+
+
+</mule>

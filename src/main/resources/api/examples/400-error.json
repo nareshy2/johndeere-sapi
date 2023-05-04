@@ -1,0 +1,9 @@
+{
+    "errorOrigin": "johndeere-sapi",
+    "status": "ERROR",
+    "code": "BAD_REQUEST",
+    "message": "HTTP POST on resource 'https://sandbox-api.navisphere.com:443/v2/visibility/shipments' failed: bad request (400).",
+    "description": "\"containerNumber\" is not allowed",
+    "correlationId": "5656-6876-6767-687",
+    "timestamp": "2023-04-04T16:53:42.002+05:30"
+}

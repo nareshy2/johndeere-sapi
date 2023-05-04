@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<flow name="shipment-order-to-johndeere" doc:id="48b0e92e-55e1-4180-a6a4-fda1f03bcb29" >
+		<ee:transform doc:name="logger Input Payload and Oauth Input Payload" doc:id="98e90659-a363-4394-8193-d0800723da69" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable resource="dwl/set-oauth-request-payload.dwl" variableName="oauthRequestPayload" />
+				<ee:set-variable resource="dwl/set-input-payload.dwl" variableName="inputPayload" />
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:request-received" doc:id="51de1105-7608-4486-ad27-20873ffddd98" name="mile-log:request-received" />
+		<flow-ref doc:name="mile-log:payload-logger" doc:id="26b04ce7-5425-4cba-9b80-6d612a264048" name="mile-log:payload-logger" />
+		<ee:transform doc:name="Prepare Johndeere Shipment Details" doc:id="16d60f32-32ed-4eb3-80bb-024e9f3c797c" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable resource="dwl/set-input-request-payload.dwl" variableName="inputRequest" />
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="oauth-cache-flow" doc:id="198cede3-ff3e-4f74-b377-b432ece582d1" name="oauth-cache-flow"/>
+		<flow-ref doc:name="johndree-shipment-flow" doc:id="b02a27e7-d5e6-4577-8fb4-bebf0f1feb64" name="johndree-shipment-flow"/>
+		<ee:transform doc:name="Set Success Response" doc:id="685ad606-fb74-42f1-a428-f397461e6ac1">
+			<ee:message>
+						<ee:set-payload resource="dwl/set-output-success-response.dwl" />
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="logger inputPayload" doc:id="72d0aab0-3cdb-45ee-9b78-f33dfffe79fd" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable resource="dwl/input-payload-success-response-sent.dwl" variableName="inputPayload" />
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:payload-logger" doc:id="389f71b4-224d-43f4-88b3-051028561d78" name="mile-log:payload-logger"/>
+		<flow-ref doc:name="mile-log:success-response-sent" doc:id="4c262696-1735-4d9d-8716-4fcc2dfc8272" name="mile-log:success-response-sent" />
+	</flow>
+</mule>

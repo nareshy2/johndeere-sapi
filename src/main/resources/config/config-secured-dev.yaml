@@ -1,0 +1,12 @@
+# Use this file for encrypted user/password information.
+# Unencrypted values may be used in this file using standard yaml syntax
+# Encrypted values must be enclosed in ![] within the quotes.
+
+#TLS context configuration
+tls:
+  keyPassword: "![e4kQX0QLXcj19lUEKWyziA==]"
+  password: "![e4kQX0QLXcj19lUEKWyziA==]"
+  
+backendBearerToken:
+  clientId: "![Ak0Io/YO/KHjKDZpOlpYi7smslknoDUWDQnZ1c4iYWg=]"
+  clientSecret: "![/9ZO9WBuB17G5vlaXm00tMH3gBQz98FdzqVMpSOstZN1UXds+Pem0lZTOLz4sH31]"

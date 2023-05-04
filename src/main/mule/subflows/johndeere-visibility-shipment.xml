@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="johndree-shipment-flow" doc:id="f8854ea1-ca7b-45eb-a047-96d318e5414a" >
+		<ee:transform doc:name="logger inputPayload" doc:id="35971bf9-9272-4ef9-9086-456790feb4ff" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable resource="dwl/input-payload-request-sent.dwl" variableName="inputPayload" />
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:request-sent" doc:id="34d9738b-7177-4cbb-882e-4310267e970d" name="mile-log:request-sent" />
+		<flow-ref doc:name="mile-log:payload-logger" doc:id="fbf4f2d2-54c8-4a61-a828-dee4cfe59163" name="mile-log:payload-logger" />
+		<try doc:name="Try" doc:id="92667515-9e07-42cc-b6f3-5725e38c920b" >
+			<http:request method="POST" doc:name="Post Shipment Create Request" doc:id="1d207196-14d1-4360-954f-f888d6d1df14" config-ref="johndeere-http-visibility-shipments" path="${httpRequest.pathVisibility}" responseTimeout="${httpRequest.responseTimeout}">
+			<reconnect />
+				<http:body><![CDATA[#[vars.inputRequest]]]></http:body>
+				<http:headers><![CDATA[#[{
+	Authorization : vars.bearerToken
+}]]]></http:headers>
+			</http:request>
+			<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="8ce371e0-2765-4491-8caa-0c7008fb1a6e">
+					<ee:transform doc:name="Set Custom Error Variable" doc:id="9980570c-aa2c-4bcf-ac06-d7781b2d1d57" >
+						<ee:message >
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable resource="dwl/custom-error.dwl" variableName="customError" />
+						</ee:variables>
+					</ee:transform>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+		<ee:transform doc:name="logger inputPayload" doc:id="5307928e-042f-454f-b37e-b3c08a55e0c9" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable resource="dwl/input-payload-success-response-received.dwl" variableName="inputPayload" />
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="mile-log:payload-logger" doc:id="b90a480c-fd9b-445b-b232-394cf6f5ef5e" name="mile-log:payload-logger" />
+		<flow-ref doc:name="mile-log:success-response-received" doc:id="14dd960a-a1c1-438e-b184-2c668a9a605c" name="mile-log:success-response-received" />
+	</sub-flow>
+</mule>

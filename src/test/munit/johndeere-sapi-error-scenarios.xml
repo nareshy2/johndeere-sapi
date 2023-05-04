@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="johndeere-sapi-error-scenarios.xml" />
+	<munit:test name="BAD_REQUEST" doc:id="601476ad-3aaf-4c5f-bc0c-8c336efc9785" description="Test" expectedErrorType="APIKIT:BAD_REQUEST" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="7f7b3ad6-26dc-49bc-8c46-a423eff3deb1" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="b74148c7-1b83-4eca-b469-bb012c829662" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="METHOD_NOT_ALLOWED" doc:id="96d4ec4a-0dea-4808-9f54-b7041bef7ad6" description="Test" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="bcfb1435-b9e7-498c-9ee1-81bef41507fc" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="ac451d94-2cd0-40cc-b45f-7dd442abe72b" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="NOT_ACCEPTABLE" doc:id="516e19cc-d55e-4980-9e7d-61e4da6bd020" description="Test" expectedErrorType="APIKIT:NOT_ACCEPTABLE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="0303492f-b47f-468f-a3e9-19f5428e9872" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="2ae915cd-0e92-4493-912f-a58a4c0d2ccb" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="NOT_FOUND" doc:id="37a72c61-607c-430c-ad5a-530860d37dd4" description="Test" expectedErrorType="APIKIT:NOT_FOUND" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="6da2da4e-1013-48b2-ad52-c4abce0a1bc1" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="826d5264-656e-4f8b-bc50-ad8acff140dc" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="NOT_IMPLEMENTED" doc:id="d88e3e3d-57ba-4f56-b57f-2e79e22678a6" description="Test" expectedErrorType="APIKIT:NOT_IMPLEMENTED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="f5e066b9-7290-4d80-ab42-c86c274c45e3" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="e738c60f-0ec9-4a92-a48e-4c30863a539e" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="UNSUPPORTED_MEDIA_TYPE" doc:id="081dd92f-607e-4fa2-9986-8f7b50d38f22" description="Test" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="89709160-bc99-4bfa-9886-3fe108673681" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="20b4fa40-df60-4201-b770-721a1ec0e93f" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="ANY" doc:id="3dc8b80b-d902-4733-9082-6435ccc1de28" description="Test" expectedErrorType="ANY" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="2995b12e-f843-4b0a-a63c-d4496b6acbfb" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="ANY" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="213c0b7c-c8e5-4b48-be6b-977e4a0a2b14" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="johndeere-sapi-CONNECTIVITY" doc:id="ae96645e-0b04-4fad-a9dd-2c0123c1653e" description="Test" expectedErrorType="HTTP:CONNECTIVITY">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Object Retrieve" doc:id="4246416f-f886-4b19-ae6e-2b7a468fe533" processor="os:retrieve">
+				<munit-tools:with-attributes>
+					<munit-tools:with-attribute whereValue="919101a3-4ac9-4c7e-b303-ca012b034fad" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://dwl-files/retrieve-oauth-access-token.dwl')]" mediaType="application/json" />
+					<munit-tools:variables>
+						<munit-tools:variable key="oauthRequestPayload" value='#[output application/json --- {	"client_id": "eyJraWQiOiI1WmFLN2VDU053dEI0R0ZIdGxiV191MzVTNGxXeGt5eGxpQWtjS3hGYUlJIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULk8wS1lZQkpzaUdqVWpjakE5eEVxcnAtaUFPMGV4N0x5UVRDVmdBb25ycHciLCJpc3MiOiJodHRwczovL2Nocm9iaW5zb24ub2t0YS5jb20vb2F1dGgyL2F1c3VxaHlmMUhqTGFhT3d6MzU2IiwiYXVkIjoiaHR0cHM6Ly9pbmF2aXNwaGVyZS5jaHJvYmluc29uLmNvbSIsImlhdCI6MTY4MjM1ODA0OSwiZXhwIjoxNjgyNDQ0NDQ5LCJjaWQiOiIwb2FxbnpldHJic0xvaUppRjM1NyIsInNjcCI6WyJyZWFkOnN0YXR1cyJdLCJzdWIiOiIwb2FxbnpldHJic0xvaUppRjM1NyJ9.LIZQU_LsA_PUNcs0M9i5AgQerQOfrCO2K3gRnF8pcyI1pOWOvBIbVtNZhKRCr_0GLaTJdEJiPYeBgLHbGISvXf77_TfwgJm5U5zjqzE49xxN64MWCkRmO5TMNQrXskY7KV1G0Kx-YV5DIjDVlfEiXJO1ClhHSxyeS25Q5ebeSSE6cVR7nTuiLWhNMcffuVhNBNeiqpkuspmh4hMdgTV1HXZmaAMTd71IVenAqJOWfIJdPuJn0VSBkxVl0m9voM1KfMUr3JsxO6lKnslcbo5E_YjMNRTIMRiRO0Z5z84KTS33tbkYsGVPxR8Xm7eTtXaiRldo_Zc0tOEm7ns-rR5m6Q"}]' mediaType="application/json" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Johndeere Response" doc:id="3a0960f9-a6e7-4edd-9761-785d9d16ce1c" processor="http:request" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="1d207196-14d1-4360-954f-f888d6d1df14" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:CONNECTIVITY" />
+				</munit-tools:then-return>
+			
+</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="b2d4e223-a2cb-4880-8e94-19a06f93d12e" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://dwl-files/input-payload.dwl')]" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="post:\order-updates:application\json:johndeere-sapi-config" doc:id="0513ad10-3fcf-4f77-add9-66fd1ebc8392" name="post:\order-updates:application\json:johndeere-sapi-config" />
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="853e4962-e15e-4187-b671-ea681b2e7966" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="FORBIDDEN" doc:id="4379085a-c570-47bd-affa-b25414d1c1bc" description="Test" expectedErrorType="HTTP:FORBIDDEN" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="04d29bd6-cc0b-43a0-8939-54307ccc1de5" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:FORBIDDEN" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="e2dc6e08-c850-416e-8d8b-e040b1f9d8cc" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="UNAUTHORIZED" doc:id="9d2c71a0-2798-48dd-b84b-43c5d9043397" description="Test" expectedErrorType="HTTP:UNAUTHORIZED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="4d037ff1-d272-424c-8e46-47b21c9a4390" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:UNAUTHORIZED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="3b02aa82-804a-4351-b2ca-de5d0a416ec6" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+	<munit:test name="INTERNAL_SERVER_ERROR" doc:id="c2451e21-7968-413e-8e14-f5e25f23d3d7" description="Test" expectedErrorType="HTTP:INTERNAL_SERVER_ERROR" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="APIKIT-main" doc:id="61f531fd-4e2f-499a-b88a-b9e07d2e3d69" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="johndeere-sapi-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:INTERNAL_SERVER_ERROR" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to johndeere-sapi-main" doc:id="c20c9004-47fe-4d39-9cc8-b403578f311f" name="johndeere-sapi-main" />
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

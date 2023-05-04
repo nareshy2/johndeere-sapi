@@ -1,0 +1,190 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  shipmentNumber:
+    description: Shipment Number associated to the shipment.
+    type: string
+    minLength: 1
+    maxLength: 20
+  tenantId:
+    description: This ID indicates who the underlying customer is.
+    type: string
+    minLength: 1
+    maxLength: 20
+  trackingNumber:
+    description: Tracking number associated to the shipment.
+    type: string
+    minLength: 1
+    maxLength: 150
+  accountCode:
+    description: Account code associated to the shipment.
+    type: string
+    minLength: 1
+    maxLength: 50
+  carrierName: 
+    description: Name of the carrier
+    type: string
+    minLength: 1
+    maxLength: 100
+  scac:
+    description: SCAC code associated to the shipment
+    type: string
+    minLength: 1
+    maxLength: 20
+  customerName:
+    description: Customer Name
+    type: string
+    minLength: 1
+    maxLength: 100
+  equipmentType:
+    description: Equipment type on the shipment
+    type: string
+    minLength: 1
+    maxLength: 50
+  mode:
+    description: Mode of the shipment.
+    type: string 
+    minLength: 1
+    maxLength: 20
+    enum: ["AIR","OCEAN","TRUCKLOAD","LTL","OPENDECK","PARCEL","RAIL","INTERMODAL"]
+  containerNumber:
+    description: Number on the container assoicated to the shipment.
+    type: string
+    minLength: 1
+    maxLength: 20
+  containerType:
+    description: Equipment size type - containerType lookup table
+    type: string
+    enum: ["L","LCL","IPLT","20HC","20","20OT","20FR","20RF","20DC","20DV","20GP","45HC","45HR","45UI","40HC","40","40OT","40HR","40RF","40FR","40DC","40DV","40GP","40HQ","45HQ","40NOR"]
+  containerInformation?:
+    description: Information pertaining to the container
+    type: string
+    minLength: 1
+    maxLength: 20
+  containerWeight:
+    description: Weight of the container
+    type: number
+  weightUnitOfMeasure:
+    description: Unit of measure for weight parameters.
+    type: string
+    enum: ["Pounds","Kilograms"]
+  isPremiumFreight?:
+    description: Is the freight delivered at a premium or expedited service level by the provider?
+    type: boolean
+  movementType:
+    description: Indicates type of movement.
+    type: string
+  isManaged?:
+    description: Is the freight shipped in a planned, mangaged capacity?
+    type: boolean
+  orderNumbers:
+    description: Array of the Order numbers assoicated to the shipment.
+    type: string []
+    minItems: 1
+    maxItems: 25
+  canceled?:
+    description: Is the shipment canceled
+    type: boolean
+  highValue?:
+    description: Does the shipment contain goods that are of high value?
+    type: boolean
+  forwarder:
+    description: The name of the forwarder
+    type: string
+    minLength: 1
+    maxLength: 200
+  stops:
+    description: Array of the Stops associated to the shipment.
+    type: array
+    items:
+      properties:
+        locationId:
+          description: Unique Identifier
+          type: string
+          minLength: 1
+          maxLength: 20
+        sequenceNumber:
+          description: Beginning at 0, increasing sequentially with each location in stop order
+          type: number
+        stopRole:
+          description: Stop role of the location
+          type: string
+          enum: ["pick","drop","crossDock","destinationAirport","destinationPort","destinationTerminal","intermediaryAirport","intermediaryPort","intermediaryRamp","originAirport","originPort","originRamp","originTerminal","originForwarder","originCrossdock","destinationForwarder","destinationCrossdock","destinationRamp","dropyard","supplier","shipper","consignee","origin","destination","broker","agent","factory"]
+        name:
+          description: Name of the location
+          type: string
+          minLength: 1
+          maxLength: 200
+        address1:
+          description: Indicate address line 1
+          type: string
+          minLength: 1
+          maxLength: 100
+        address2?:
+          description: Indicate address line 2
+          type: string
+          minLength: 1
+          maxLength: 100
+        city:
+          description: Indicate City
+          type: string
+          minLength: 1
+          maxLength: 100
+        stateProvinceCode:
+          description: Indicate State or Province
+          type: string
+          minLength: 1
+          maxLength: 50
+        postalCode:
+          description: Indicate Postal codes
+          type: string
+          minLength: 1
+          maxLength: 20
+        countryCode:
+          description: Indicate 2 digit country code utilizing ISO 3166-1 alpha-2
+          type: string
+          minLength: 1
+          maxLength: 2
+        requested?:
+          description: Order need by date, enter close date time if window time is provided in an ISO8601 format.
+          type: datetime
+        openDateTime?:
+          description: Beginning of order need by window, enter requested date if no window time is provided in an ISO8601 format.
+          type: datetime
+        closeDateTime?:
+          description: End of order need by window, enter requested date if no window time is provided in an ISO8601 format.
+          type: datetime
+        unlocationCode?:
+          description: The UN Location Code for the stop location.
+          type: string
+          minLength: 1
+          maxLength: 10
+  handlingUnits:
+    description: Array of the commodities associated to the shipment.
+    type: array
+    items:
+      properties:
+        handlingUnitId:
+          description: Handling unit ID
+          type: string
+          minLength: 1
+          maxLength: 20
+        packagingType:
+          description: C.H. Robinson defined code for packaging type/code.
+          type: string
+          enum: ["BAL","BIN","BOT","BXT","JAR","LSE","LUG","OTHR","REL","SAK","SKD","SKE","SLP","TLD","TRY","Empty","BAG","BOX","BDL","CTN","CAS","CRT","DZ","DRM","EAC","GYL","HDW","LNFT","PKG","PAL","PLT","PCS","LBS","ROL","TOT","YD","Skids","GAL","KIT","FT","PAD","PR","SET","SHT","M","KG","IBC","BAT","AST","CUB","RKS","PCK","TH","24BIN","30BIN","36BIN","40BIN","BSHL","CLLPK","DRC","ECO","EURO","FLAT","HFBIN","HFCTN","HVYPK","IFCO","I6408","I6411","I6413","I6416","I6419","I6423","I6425","I6428","ORBIS","O6409","O6411","O6413","O6416","O6419","O6425","O6428","P4311","P4317","P6408","P6411","P6413","P6416","P6419","P6423","P6425","P6428","RPC","R6411","R6413","R6416","TNBIN","TOSCA","T6408","T6411","T6413","T6416","T6419","T6423","T6425","T6428","WDCRT","BRL","RCK","TUB","CG","DSP","SQF","CYL","KEG","IFCLB","PLT1","PLT2","PLT3","CAR","COIL","PI","GOH","BLK","POG","L","IPLT","RORO","45HC","45HR","40HC","40","40OT","40HR","40RF","40FR","20HC","20","20OT","20FR","45GP"]
+        quantity:
+          description: Quantity of handling units
+          type: number
+        containerNumber:
+          description: Container Number
+          type: string
+          minLength: 1
+          maxLength: 20
+        pickLocSequenceNumber:
+          description: The associated stop sequence number for which this handling unit will be picked up.
+          type: integer
+        dropLocSequenceNumber:
+          description: The associated stop sequence number for which this handling unit will be delivered.
+          type: integer 
+        
